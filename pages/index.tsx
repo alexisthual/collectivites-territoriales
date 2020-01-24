@@ -1,11 +1,27 @@
-import { Layout, Menu, Icon } from 'antd';
+import { Col, Input, Layout, List, Row, Select, Typography } from 'antd';
 
+const { Search } = Input;
 const { Content, Footer, Sider } = Layout;
+const { Option } = Select;
+const { Title } = Typography;
+
+const onChange = (event) => {
+  console.log(event)
+};
+
+const handleChange = (value) => {
+  console.log(value)
+}
+
+const data = [
+  {name: "Ile de France"},
+  {name: "Polynésie française"}
+]
 
 export default () => (
   <Layout className="page-layout">
     <Sider
-      breakpoint="lg"
+      breakpoint="md"
       collapsedWidth="0"
       onBreakpoint={broken => {
         console.log(broken);
@@ -13,26 +29,56 @@ export default () => (
       onCollapse={(collapsed, type) => {
         console.log(collapsed, type);
       }}
+      width={300}
     >
-      <div className="logo" />
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-        <Menu.Item key="1">
-          <Icon type="user" />
-          <span className="nav-text">nav 1</span>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <Icon type="video-camera" />
-          <span className="nav-text">nav 2</span>
-        </Menu.Item>
-        <Menu.Item key="3">
-          <Icon type="upload" />
-          <span className="nav-text">nav 3</span>
-        </Menu.Item>
-        <Menu.Item key="4">
-          <Icon type="user" />
-          <span className="nav-text">nav 4</span>
-        </Menu.Item>
-      </Menu>
+      <Row gutter={[20, 12]}>
+        <Col span={22} offset={1}>
+          <Title className="app-title">Coolectivités</Title>
+        </Col>
+      </Row>
+      <Row gutter={[0, 12]}>
+        <Col span={22} offset={1}>
+          <Select className="full-width" defaultValue="2019">
+            <Option value="2015">2015</Option>
+            <Option value="2016">2016</Option>
+            <Option value="2017">2017</Option>
+            <Option value="2018">2018</Option>
+            <Option value="2019">2019</Option>
+          </Select>
+        </Col>
+      </Row>
+      <Row gutter={[0, 12]}>
+        <Col span={22} offset={1}>
+          <Select className="full-width" defaultValue="d">
+            <Option value="r" disabled>Régions</Option>
+            <Option value="d">Départements</Option>
+            <Option value="c" disabled>Communes</Option>
+          </Select>
+        </Col>
+      </Row>
+      <Row gutter={[0, 12]}>
+        <Col span={22} offset={1}>
+          <Search
+            className="full-width"
+            placeholder="Nom de la collectivité"
+          />
+        </Col>
+      </Row>
+      <Row gutter={[0, 8]}>
+        <Col span={24}>
+          <List
+            dataSource={data}
+            renderItem={item => (
+              <List.Item key={item.name}>
+                <List.Item.Meta
+                  title={<a href="https://ant.design">{item.name}</a>}
+                />
+              </List.Item>
+            )}
+          >
+          </List>
+        </Col>
+      </Row>
     </Sider>
     <Layout>
       <Content>

@@ -1,5 +1,14 @@
+.app-title {
+  color: #fff !important;
+  font-size: 20px;
+}
+
 .page-layout {
   min-height: 100vh !important;
+}
+
+.full-width {
+  width: 100%;
 }
 
 .footer {
