@@ -1,8 +1,9 @@
-import { Col, Input, Layout, List, Row, Select, Typography } from 'antd';
+import { Col, Icon, Input, Layout, List, Row, Select, Tabs, Typography } from 'antd';
 
 const { Search } = Input;
 const { Content, Footer, Sider } = Layout;
 const { Option } = Select;
+const { TabPane } = Tabs;
 const { Title } = Typography;
 
 const onChange = (event) => {
@@ -81,8 +82,32 @@ export default () => (
       </Row>
     </Sider>
     <Layout>
-      <Content>
-        <div>content</div>
+      <Content style={{margin: "5px"}}>
+        <Tabs defaultActiveKey="simple" type="card">
+          <TabPane
+            key="simple"
+            tab={
+              <span>
+                <Icon type="bulb" />
+                Vue simple
+              </span>
+            }
+          >
+            Tab 1
+          </TabPane>
+          <TabPane
+            disabled
+            key="advanced"
+            tab={
+              <span>
+                <Icon type="thunderbolt" />
+                Vue avancée
+              </span>
+            }
+          >
+            Tab 2
+          </TabPane>
+        </Tabs>
       </Content>
       <Footer className="footer">
         Coolectivités Territoriales ©2020
