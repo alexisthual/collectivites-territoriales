@@ -1,5 +1,7 @@
 import { Col, Icon, Input, Layout, List, Row, Select, Tabs, Typography } from 'antd';
 
+import SimpleTab from '../components/SimpleTab'
+
 const { Search } = Input;
 const { Content, Footer, Sider } = Layout;
 const { Option } = Select;
@@ -30,7 +32,7 @@ export default () => (
       onCollapse={(collapsed, type) => {
         console.log(collapsed, type);
       }}
-      width={300}
+      width={250}
     >
       <Row gutter={[20, 12]}>
         <Col span={22} offset={1}>
@@ -83,31 +85,33 @@ export default () => (
     </Sider>
     <Layout>
       <Content style={{margin: "5px"}}>
-        <Tabs defaultActiveKey="simple" type="card">
-          <TabPane
-            key="simple"
-            tab={
-              <span>
-                <Icon type="bulb" />
-                Vue simple
-              </span>
-            }
-          >
-            Tab 1
-          </TabPane>
-          <TabPane
-            disabled
-            key="advanced"
-            tab={
-              <span>
-                <Icon type="thunderbolt" />
-                Vue avancée
-              </span>
-            }
-          >
-            Tab 2
-          </TabPane>
-        </Tabs>
+        <div className="card-container">
+          <Tabs defaultActiveKey="simple" type="card">
+            <TabPane
+              key="simple"
+              tab={
+                <span>
+                  <Icon type="bulb" />
+                  Vue simple
+                </span>
+              }
+            >
+              <SimpleTab />
+            </TabPane>
+            <TabPane
+              disabled
+              key="advanced"
+              tab={
+                <span>
+                  <Icon type="thunderbolt" />
+                  Vue avancée
+                </span>
+              }
+            >
+              Tab 2
+            </TabPane>
+          </Tabs>
+        </div>
       </Content>
       <Footer className="footer">
         Coolectivités Territoriales ©2020

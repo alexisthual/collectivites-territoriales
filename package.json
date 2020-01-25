@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@nivo/bar": "^0.61.1",
+    "@nivo/pie": "^0.61.1",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-less": "^1.0.1",
     "antd": "^3.9.2",
@@ -16,7 +18,8 @@
     "next": "latest",
     "null-loader": "2.0.0",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react-dom": "^16.7.0",
+    "react-virtualized": "^9.21.2"
   },
   "license": "MIT",
   "devDependencies": {

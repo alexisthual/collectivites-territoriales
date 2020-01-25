@@ -14,3 +14,35 @@
 .footer {
   text-align: center;
 }
+
+.card-container, .card-container > .ant-tabs {
+  height: 100%;
+}
+
+
+.card-container > .ant-tabs-card > .ant-tabs-content {
+  min-height: 100%;
+  margin-top: -16px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
+  background: #fff;
+  padding: 0px 16px;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar {
+  border-color: #fff;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+  border-color: transparent;
+  background: transparent;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
+  border-color: #fff;
+  background: #fff;
+}
