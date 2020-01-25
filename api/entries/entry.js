@@ -1,11 +1,12 @@
 const db = require('../../lib/db')
-const escape = require('sql-template-strings')
 
 module.exports = async (req, res) => {
-  const entries = await db.query(escape`
+  const entries = await db.query(`
     SELECT *
     FROM data
-    WHERE ndept = ${req.query.ndept}
+    WHERE exer = ${req.query.year}
+    AND ndept = ${req.query.ndept}
+    AND COMPTE = ${req.query.COMPTE}
   `)
 
   res.status(200).json({ entries })

@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   const year = parseInt(req.query.year) || 2018
   console.log(`YEAR ${year}`)
 
-  const entries = await db.query(`SELECT ndept FROM data WHERE exer=2018 GROUP BY ndept;`)
+  const entries = await db.query(`SELECT ndept FROM data WHERE exer=${year} GROUP BY ndept;`)
   console.log(`ENTRIES`)
   console.log(entries)
 

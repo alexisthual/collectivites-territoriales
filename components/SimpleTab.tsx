@@ -2,12 +2,6 @@ import { Bar } from '@nivo/bar'
 import { Pie } from '@nivo/pie'
 import { AutoSizer } from 'react-virtualized'
 
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
-
 const pie_mock_data = [
   {
     "id": "php",
@@ -150,7 +144,7 @@ const bar_mock_data = [
 ]
 
 const SimpleTab = () => (
-  <AutoSizer>
+  <AutoSizer style={{height: '80vh'}}>
     {({ height, width }) => (
       <>
         <Pie

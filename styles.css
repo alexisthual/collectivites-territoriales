@@ -1,3 +1,25 @@
+.ant-layout-sider {
+  height: 100vh;
+  overflow-y: hidden;
+  position: relative;
+}
+
+.entry-list {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.entry-item {
+  background-color: #fff;
+  color: #222;
+  margin: 3px;
+  padding: 5px 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .app-title {
   color: #fff !important;
   font-size: 16px;
@@ -15,13 +37,12 @@
   height: 100%;
 }
 
-
 .card-container > .ant-tabs-card > .ant-tabs-content {
-  min-height: 100%;
+  min-height: 400px;
   margin-top: -16px;
-  display: flex;
+  /* display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: stretch; */
 }
 
 .card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {

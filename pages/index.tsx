@@ -4,29 +4,20 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
 import SimpleTab from '../components/SimpleTab'
+import SunburstTab from '../components/SunburstTab'
+import EntryList from '../components/EntryList'
 
 const { Search } = Input;
-const { Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 const { Option } = Select;
 const { TabPane } = Tabs;
 const { Title } = Typography;
-
-const data = [
-  {name: "Ile de France"},
-  {name: "Polynésie française"}
-]
 
 const MainPage = ({ entries, y, t }: any) => {
   const router = useRouter()
   const [year, setYear] = useState(y)
   const [type, setType] = useState(t)
   const [query, setQuery] = useState()
-
-  const handleState = () => {
-    if (year && type) {
-      router.push('/[year]/[type]', `/${year}/${type}`)
-    }
-  }
 
   const yearChanged = (value) => {
     setYear(value)
@@ -104,17 +95,7 @@ const MainPage = ({ entries, y, t }: any) => {
         </Row>
         <Row gutter={[0, 8]}>
           <Col span={24}>
-            <List
-              dataSource={entries}
-              renderItem={(item: any) => (
-                <List.Item key={item.ndept}>
-                  <List.Item.Meta
-                    title={item.ndept}
-                  />
-                </List.Item>
-              )}
-            >
-            </List>
+            <EntryList entries={entries} />
           </Col>
         </Row>
       </Sider>
@@ -134,7 +115,6 @@ const MainPage = ({ entries, y, t }: any) => {
                 <SimpleTab />
               </TabPane>
               <TabPane
-                disabled
                 key="advanced"
                 tab={
                   <span>
@@ -143,7 +123,7 @@ const MainPage = ({ entries, y, t }: any) => {
                   </span>
                 }
               >
-                Tab 2
+                <SunburstTab />
               </TabPane>
             </Tabs>
           </div>
@@ -154,6 +134,8 @@ const MainPage = ({ entries, y, t }: any) => {
 }
 
 MainPage.getInitialProps = async ({ req, query }) => {
+  console.log(req)
+  console.log(query)
   let protocol = req
     ? `${req.headers['x-forwarded-proto']}:`
     : location.protocol
