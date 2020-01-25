@@ -24,6 +24,8 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "lib/db.js",
+    "api/entries/index.js"
   ]
 }

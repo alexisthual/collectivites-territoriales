@@ -20,7 +20,10 @@
     "null-loader": "2.0.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-virtualized": "^9.21.2"
+    "react-virtualized": "^9.21.2",
+    "sql-template-strings": "^2.2.2",
+    "sqlite-async": "^1.0.12",
+    "sqlite3": "^4.1.1"
   },
   "license": "MIT",
   "devDependencies": {

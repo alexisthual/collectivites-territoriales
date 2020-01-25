@@ -16,27 +16,23 @@ const data = [
   {name: "Polynésie française"}
 ]
 
-const MainPage = ({ y=2018, t="d", q=null }) => {
+const MainPage = ({ entries, y, t }: any) => {
   const router = useRouter()
   const [year, setYear] = useState(y)
   const [type, setType] = useState(t)
-  const [query, setQuery] = useState(q)
+  const [query, setQuery] = useState()
 
   const handleState = () => {
-    console.log("here")
-    console.log([year, type])
     if (year && type) {
       router.push('/[year]/[type]', `/${year}/${type}`)
     }
   }
 
   const yearChanged = (value) => {
-    console.log(`year changed ${value}`)
     setYear(value)
   }
 
   const typeChanged = (value) => {
-    console.log(`type changed ${type}`)
     setType(value)
   }
 
@@ -109,11 +105,11 @@ const MainPage = ({ y=2018, t="d", q=null }) => {
         <Row gutter={[0, 8]}>
           <Col span={24}>
             <List
-              dataSource={data}
-              renderItem={item => (
-                <List.Item key={item.name}>
+              dataSource={entries}
+              renderItem={(item: any) => (
+                <List.Item key={item.ndept}>
                   <List.Item.Meta
-                    title={<a href="https://ant.design">{item.name}</a>}
+                    title={item.ndept}
                   />
                 </List.Item>
               )}
@@ -157,16 +153,29 @@ const MainPage = ({ y=2018, t="d", q=null }) => {
   )
 }
 
-// MainPage.getInitialProps = async ({ req, query }) => {
-//   const protocol = req
-//     ? `${req.headers['x-forwarded-proto']}:`
-//     : location.protocol
-//   const host = req ? req.headers['x-forwarded-host'] : location.host
-//   const pageRequest = `${protocol}//${host}/api/profiles?page=${query.page ||
-//     1}&limit=${query.limit || 9}`
-//   const res = await fetch(pageRequest)
-//   const json = await res.json()
-//   return json
-// }
+MainPage.getInitialProps = async ({ req, query }) => {
+  let protocol = req
+    ? `${req.headers['x-forwarded-proto']}:`
+    : location.protocol
+  let host = req ? req.headers['x-forwarded-host'] : location.host
+
+  // TODO: fix
+  protocol = 'http'
+  host = 'localhost:3000'
+
+  const year = query.y || 2018
+  const type = query.t || 'd'
+
+  const entries = `${protocol}://${host}/api/entries?year=${year}&type=${type}`
+
+  const res = await fetch(entries)
+  const results = await res.json()
+
+  return {
+    entries: results.entries,
+    y: year,
+    t: type
+  }
+}
 
 export default MainPage
