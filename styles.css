@@ -1,6 +1,6 @@
 .app-title {
   color: #fff !important;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .page-layout {
@@ -9,10 +9,6 @@
 
 .full-width {
   width: 100%;
-}
-
-.footer {
-  text-align: center;
 }
 
 .card-container, .card-container > .ant-tabs {

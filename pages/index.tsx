@@ -113,9 +113,6 @@ export default () => (
           </Tabs>
         </div>
       </Content>
-      <Footer className="footer">
-        Coolectivités Territoriales ©2020
-      </Footer>
     </Layout>
   </Layout>
 )
