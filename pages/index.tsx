@@ -1,11 +1,14 @@
+import { Col, Icon, Layout, Row, Select, Tabs, Typography } from 'antd';
 import fetch from 'isomorphic-unfetch'
-import { Col, Icon, Input, Layout, List, Row, Select, Tabs, Typography } from 'antd';
+import { NextPageContext } from 'next';
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
-import SimpleTab from '../components/SimpleTab'
+import SimplePie from '../components/SimplePie'
+import SimpleBars from '../components/SimpleBars'
 import SunburstTab from '../components/SunburstTab'
 import EntryList from '../components/EntryList'
+import { AutoSizer } from 'react-virtualized';
 
 const { Content, Sider } = Layout;
 const { Option } = Select;
@@ -14,12 +17,13 @@ const { Title } = Typography;
 
 const MainPage = ({ year, type, index }: any) => {
   const router = useRouter()
-  const [entries, setEntries] = useState([])
-  const [entryValues, setEntryValues] = useState([])
+  const [authorities, setAuthorities] = useState([])
+  const [pieData, setPieData] = useState([])
+  const [barsData, setBarsData] = useState([])
   const protocol = 'http'
   const host = 'localhost:3000'
 
-  const fetchJson = async (url, callback) => {
+  const fetchJson = async (url: string, callback: any) => {
     const res = await fetch(url)
     const results = await res.json()
     callback(results)
@@ -27,11 +31,14 @@ const MainPage = ({ year, type, index }: any) => {
 
   useEffect(() => {
     const entriesUrl = `${protocol}://${host}/api/authorities?year=${year}&type=${type}`
-    fetchJson(entriesUrl, setEntries)
+    fetchJson(entriesUrl, setAuthorities)
 
     if(index) {
-      const entryUrl = `${protocol}://${host}/api/authority?year=${year}&type=${type}&ndept=${index}`
-      fetchJson(entryUrl, setEntryValues)
+      const pieDataUrl = `${protocol}://${host}/api/authority?year=${year}&ndept=${index}`
+      fetchJson(pieDataUrl, setPieData)
+
+      const barsDataUrl = `${protocol}://${host}/api/authority?ndept=${index}`
+      fetchJson(barsDataUrl, setBarsData)
     }
   }, [year, type, index])
 
@@ -61,7 +68,7 @@ const MainPage = ({ year, type, index }: any) => {
             <Select
               className="full-width"
               defaultValue={year}
-              onChange={(newYear) => changeRoute({y: newYear})}
+              onChange={(newYear: number) => changeRoute({y: newYear})}
             >
               <Option value="2015">2015</Option>
               <Option value="2016">2016</Option>
@@ -76,7 +83,7 @@ const MainPage = ({ year, type, index }: any) => {
             <Select
               className="full-width"
               defaultValue={type}
-              onChange={(newType) => changeRoute({t: newType})}
+              onChange={(newType: string) => changeRoute({t: newType})}
             >
               <Option value="r" disabled>Régions</Option>
               <Option value="d">Départements</Option>
@@ -87,8 +94,8 @@ const MainPage = ({ year, type, index }: any) => {
         <Row gutter={[0, 8]}>
           <Col span={24}>
             <EntryList
-              entries={entries}
-              callback={(newIndex) => changeRoute({id: newIndex})}
+              entries={authorities}
+              callback={(newIndex: number) => changeRoute({id: newIndex})}
             />
           </Col>
         </Row>
@@ -106,7 +113,22 @@ const MainPage = ({ year, type, index }: any) => {
                   </span>
                 }
               >
-                <SimpleTab data={entryValues} />
+                <AutoSizer style={{height: '80vh'}}>
+                  {({ height, width }) => (
+                    <>
+                      <SimplePie
+                        data={pieData}
+                        height={height}
+                        width={width}
+                      />
+                      <SimpleBars
+                        data={barsData}
+                        height={height}
+                        width={width}
+                      />
+                    </>
+                  )}
+                </AutoSizer>
               </TabPane>
               <TabPane
                 key="advanced"
@@ -127,17 +149,18 @@ const MainPage = ({ year, type, index }: any) => {
   )
 }
 
-MainPage.getInitialProps = async ({ req, query }) => {
-  // console.log(req)
+MainPage.getInitialProps = async ({ query }: NextPageContext) => {
   console.log(query)
-  let protocol = req
-    ? `${req.headers['x-forwarded-proto']}:`
-    : location.protocol
-  let host = req ? req.headers['x-forwarded-host'] : location.host
 
-  // TODO: fix
-  protocol = 'http'
-  host = 'localhost:3000'
+  // console.log(req)
+  // let protocol = req
+  //   ? `${req.headers['x-forwarded-proto']}:`
+  //   : location.protocol
+  // let host = req ? req.headers['x-forwarded-host'] : location.host
+
+  // // TODO: fix
+  // protocol = 'http'
+  // host = 'localhost:3000'
 
   const year = query.year || 2018
   const type = query.type || 'd'
