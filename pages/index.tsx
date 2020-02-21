@@ -26,11 +26,11 @@ const MainPage = ({ year, type, index }: any) => {
   }
 
   useEffect(() => {
-    const entriesUrl = `${protocol}://${host}/api/entries?year=${year}&type=${type}`
+    const entriesUrl = `${protocol}://${host}/api/authorities?year=${year}&type=${type}`
     fetchJson(entriesUrl, setEntries)
 
     if(index) {
-      const entryUrl = `${protocol}://${host}/api/entries/entry?year=${year}&type=${type}&ndept=${index}`
+      const entryUrl = `${protocol}://${host}/api/authority?year=${year}&type=${type}&ndept=${index}`
       fetchJson(entryUrl, setEntryValues)
     }
   }, [year, type, index])
