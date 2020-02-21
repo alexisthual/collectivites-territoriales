@@ -1,4 +1,6 @@
+// @ts-ignore
 import { Sunburst } from '@nivo/sunburst'
+// const Sunburst = require('@nivo/sunburst')
 import { AutoSizer } from 'react-virtualized'
 
 const mock_data = {
