@@ -7,47 +7,48 @@ import SimpleTab from '../components/SimpleTab'
 import SunburstTab from '../components/SunburstTab'
 import EntryList from '../components/EntryList'
 
-const { Search } = Input;
 const { Content, Sider } = Layout;
 const { Option } = Select;
 const { TabPane } = Tabs;
 const { Title } = Typography;
 
-const MainPage = ({ entries, y, t }: any) => {
+const MainPage = ({ year, type, index }: any) => {
   const router = useRouter()
-  const [year, setYear] = useState(y)
-  const [type, setType] = useState(t)
-  const [query, setQuery] = useState()
+  const [entries, setEntries] = useState([])
+  const [entryValues, setEntryValues] = useState([])
+  const protocol = 'http'
+  const host = 'localhost:3000'
 
-  const yearChanged = (value) => {
-    setYear(value)
-  }
-
-  const typeChanged = (value) => {
-    setType(value)
-  }
-
-  const queryChanged = (value) => {
-    setQuery(value)
+  const fetchJson = async (url, callback) => {
+    const res = await fetch(url)
+    const results = await res.json()
+    callback(results)
   }
 
   useEffect(() => {
-    if (year && type) {
-      router.push('/[year]/[type]', `/${year}/${type}`)
+    const entriesUrl = `${protocol}://${host}/api/entries?year=${year}&type=${type}`
+    fetchJson(entriesUrl, setEntries)
+
+    if(index) {
+      const entryUrl = `${protocol}://${host}/api/entries/entry?year=${year}&type=${type}&ndept=${index}`
+      fetchJson(entryUrl, setEntryValues)
     }
-  }, [year, type])
+  }, [year, type, index])
+
+  const changeRoute = ({y=year, t=type, id=index}) => {
+    if (y && t && id) {
+      router.push('/[year]/[type]/[index]', `/${y}/${t}/${id}`)
+    }
+    else if (y && t) {
+      router.push('/[year]/[type]', `/${y}/${t}`)
+    }
+  }
 
   return (
     <Layout className="page-layout">
       <Sider
         breakpoint="md"
         collapsedWidth="0"
-        onBreakpoint={broken => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
         width={250}
       >
         <Row gutter={[20, 12]}>
@@ -60,7 +61,7 @@ const MainPage = ({ entries, y, t }: any) => {
             <Select
               className="full-width"
               defaultValue={year}
-              onChange={yearChanged}
+              onChange={(newYear) => changeRoute({y: newYear})}
             >
               <Option value="2015">2015</Option>
               <Option value="2016">2016</Option>
@@ -75,7 +76,7 @@ const MainPage = ({ entries, y, t }: any) => {
             <Select
               className="full-width"
               defaultValue={type}
-              onChange={typeChanged}
+              onChange={(newType) => changeRoute({t: newType})}
             >
               <Option value="r" disabled>Régions</Option>
               <Option value="d">Départements</Option>
@@ -83,19 +84,12 @@ const MainPage = ({ entries, y, t }: any) => {
             </Select>
           </Col>
         </Row>
-        <Row gutter={[0, 12]}>
-          <Col span={22} offset={1}>
-            <Search
-              className="full-width"
-              placeholder="Nom de la collectivité"
-              value={query}
-              onChange={queryChanged}
-            />
-          </Col>
-        </Row>
         <Row gutter={[0, 8]}>
           <Col span={24}>
-            <EntryList entries={entries} />
+            <EntryList
+              entries={entries}
+              callback={(newIndex) => changeRoute({id: newIndex})}
+            />
           </Col>
         </Row>
       </Sider>
@@ -112,7 +106,7 @@ const MainPage = ({ entries, y, t }: any) => {
                   </span>
                 }
               >
-                <SimpleTab />
+                <SimpleTab data={entryValues} />
               </TabPane>
               <TabPane
                 key="advanced"
@@ -134,7 +128,7 @@ const MainPage = ({ entries, y, t }: any) => {
 }
 
 MainPage.getInitialProps = async ({ req, query }) => {
-  console.log(req)
+  // console.log(req)
   console.log(query)
   let protocol = req
     ? `${req.headers['x-forwarded-proto']}:`
@@ -145,18 +139,14 @@ MainPage.getInitialProps = async ({ req, query }) => {
   protocol = 'http'
   host = 'localhost:3000'
 
-  const year = query.y || 2018
-  const type = query.t || 'd'
-
-  const entries = `${protocol}://${host}/api/entries?year=${year}&type=${type}`
-
-  const res = await fetch(entries)
-  const results = await res.json()
+  const year = query.year || 2018
+  const type = query.type || 'd'
+  const index = query.index || undefined
 
   return {
-    entries: results.entries,
-    y: year,
-    t: type
+    year,
+    type,
+    index
   }
 }
 
