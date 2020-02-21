@@ -30,6 +30,7 @@
   "devDependencies": {
     "@types/node": "^13.5.0",
     "@types/react": "^16.9.19",
+    "@types/react-virtualized": "^9.21.8",
     "typescript": "^3.7.5"
   }
 }
