@@ -11,15 +11,15 @@ module.exports = async (req, res) => {
     entries = await db.query(`
       SELECT sum(value) as value, COMPTE_T
       FROM data
-      WHERE exer = ${year}
-      AND ndept = "${ndept}"
+      WHERE ndept = "${ndept}"
+      AND exer = ${year}
       GROUP BY COMPTE_T
       ORDER BY value DESC;`)
   } else {
     entries = await db.query(`
       SELECT sum(value) as value, exer as year, COMPTE_T
       FROM data
-      AND ndept = "${ndept}"
+      WHERE ndept = "${ndept}"
       GROUP BY exer, COMPTE_T
       ORDER BY value DESC;`)
   }
