@@ -1,37 +1,19 @@
-.ant-layout-sider {
-  height: 100vh;
-  overflow-y: hidden;
-  position: relative;
-}
-
-.entry-list {
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-  padding: 15px;
-}
-
-.entry-item {
-  background-color: #fff;
-  color: #222;
-  margin: 3px;
-  padding: 5px 15px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.app-title {
+.ant-layout-header h2 {
   color: #fff !important;
-  font-size: 16px;
 }
 
-.page-layout {
-  min-height: 100vh !important;
+#main-container {
+  padding: 20px 50px;
 }
 
 .full-width {
   width: 100%;
 }
+
+/* .page-layout {
+  min-height: 100vh !important;
+}
+
 
 .card-container, .card-container > .ant-tabs {
   height: 100%;
@@ -39,15 +21,10 @@
 
 .card-container > .ant-tabs-card > .ant-tabs-content {
   min-height: 400px;
-  margin-top: -16px;
-  /* display: flex;
-  flex-direction: row;
-  align-items: stretch; */
 }
 
 .card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
   background: #fff;
-  padding: 0px 16px;
 }
 
 .card-container > .ant-tabs-card > .ant-tabs-bar {
@@ -62,4 +39,4 @@
 .card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
   border-color: #fff;
   background: #fff;
-}
+} */

@@ -7,10 +7,9 @@ import { useState, useEffect } from 'react'
 import SimplePie from '../components/SimplePie'
 import SimpleBars from '../components/SimpleBars'
 import SunburstTab from '../components/SunburstTab'
-import EntryList from '../components/EntryList'
 import { AutoSizer } from 'react-virtualized';
 
-const { Content, Sider } = Layout;
+const { Content, Header } = Layout;
 const { Option } = Select;
 const { TabPane } = Tabs;
 const { Title } = Typography;
@@ -51,59 +50,58 @@ const MainPage = ({ year, type, index }: any) => {
     }
   }
 
+  const AuthoritiesSelect = index && authorities ?
+    <Select
+      className="full-width"
+      defaultValue={index}
+      onChange={(newIndex: string) => changeRoute({id: newIndex})}
+    >
+      {
+        authorities.map((authority: any) => (
+          <Option key={authority.ndept} value={authority.ndept}>{authority.ndept}</Option>
+        ))
+      }
+    </Select> :
+    <Select className="full-width" disabled ></Select>
+
   return (
     <Layout className="page-layout">
-      <Sider
-        breakpoint="md"
-        collapsedWidth="0"
-        width={250}
-      >
-        <Row gutter={[20, 12]}>
-          <Col span={22} offset={1}>
-            <Title className="app-title">Coolectivités</Title>
-          </Col>
-        </Row>
-        <Row gutter={[0, 12]}>
-          <Col span={22} offset={1}>
-            <Select
-              className="full-width"
-              defaultValue={year}
-              onChange={(newYear: number) => changeRoute({y: newYear})}
-            >
-              <Option value="2015">2015</Option>
-              <Option value="2016">2016</Option>
-              <Option value="2017">2017</Option>
-              <Option value="2018">2018</Option>
-              <Option value="2019">2019</Option>
-            </Select>
-          </Col>
-        </Row>
-        <Row gutter={[0, 12]}>
-          <Col span={22} offset={1}>
-            <Select
-              className="full-width"
-              defaultValue={type}
-              onChange={(newType: string) => changeRoute({t: newType})}
-            >
-              <Option value="r" disabled>Régions</Option>
-              <Option value="d">Départements</Option>
-              <Option value="c" disabled>Communes</Option>
-            </Select>
-          </Col>
-        </Row>
-        <Row gutter={[0, 8]}>
-          <Col span={24}>
-            <EntryList
-              entries={authorities}
-              callback={(newIndex: number) => changeRoute({id: newIndex})}
-            />
-          </Col>
-        </Row>
-      </Sider>
+      <Header>
+        <Title level={2}>Recettes des Collectivités Territoriales</Title>
+      </Header>
       <Layout>
-        <Content style={{margin: "5px"}}>
+        <Content id="main-container">
+          <div style={{margin: "5px 0px"}}>
+            <Row type="flex" justify="space-around">
+              <Col span={6}>
+                <Select
+                  className="full-width"
+                  defaultValue={year}
+                  onChange={(newYear: number) => changeRoute({y: newYear})}
+                >
+                  <Option value="2016">2016</Option>
+                  <Option value="2017">2017</Option>
+                  <Option value="2018">2018</Option>
+                </Select>
+              </Col>
+              <Col span={6}>
+                <Select
+                  className="full-width"
+                  defaultValue={type}
+                  onChange={(newType: string) => changeRoute({t: newType})}
+                >
+                  <Option value="r" disabled>Régions</Option>
+                  <Option value="d">Départements</Option>
+                  <Option value="c" disabled>Communes</Option>
+                </Select>
+              </Col>
+              <Col span={6}>
+                {AuthoritiesSelect}
+              </Col>
+            </Row>
+          </div>
           <div className="card-container">
-            <Tabs defaultActiveKey="simple" type="card">
+            <Tabs defaultActiveKey="simple">
               <TabPane
                 key="simple"
                 tab={
