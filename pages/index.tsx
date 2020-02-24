@@ -1,4 +1,4 @@
-import { Col, Icon, Layout, Row, Select, Tabs, Typography } from 'antd';
+import { Col, Form, Icon, Layout, Row, Select, Tabs, Typography } from 'antd';
 import fetch from 'isomorphic-unfetch'
 import { NextPageContext } from 'next';
 import { useRouter } from 'next/router'
@@ -43,10 +43,10 @@ const MainPage = ({ year, type, index }: any) => {
 
   const changeRoute = ({y=year, t=type, id=index}) => {
     if (y && t && id) {
-      router.push('/[year]/[type]/[index]', `/${y}/${t}/${id}`)
+      router.push('/[type]/[year]/[index]', `/${t}/${y}/${id}`)
     }
     else if (y && t) {
-      router.push('/[year]/[type]', `/${y}/${t}`)
+      router.push('/[type]/[year]', `/${t}/${y}`)
     }
   }
 
@@ -74,29 +74,42 @@ const MainPage = ({ year, type, index }: any) => {
           <div style={{margin: "5px 0px"}}>
             <Row type="flex" justify="space-around">
               <Col span={6}>
-                <Select
-                  className="full-width"
-                  defaultValue={year}
-                  onChange={(newYear: number) => changeRoute({y: newYear})}
-                >
-                  <Option value="2016">2016</Option>
-                  <Option value="2017">2017</Option>
-                  <Option value="2018">2018</Option>
-                </Select>
+                <Form>
+                  <Form.Item label="Collectivité">
+                    <Select
+                      disabled
+                      className="full-width"
+                      defaultValue={type}
+                      onChange={(newType: string) => changeRoute({t: newType})}
+                    >
+                      <Option value="r" disabled>Régions</Option>
+                      <Option value="d">Départements</Option>
+                      <Option value="c" disabled>Communes</Option>
+                    </Select>
+                  </Form.Item>
+                </Form>
               </Col>
               <Col span={6}>
-                <Select
-                  className="full-width"
-                  defaultValue={type}
-                  onChange={(newType: string) => changeRoute({t: newType})}
-                >
-                  <Option value="r" disabled>Régions</Option>
-                  <Option value="d">Départements</Option>
-                  <Option value="c" disabled>Communes</Option>
-                </Select>
+                <Form>
+                  <Form.Item label="Année">
+                    <Select
+                      className="full-width"
+                      defaultValue={year}
+                      onChange={(newYear: number) => changeRoute({y: newYear})}
+                    >
+                      <Option value="2016">2016</Option>
+                      <Option value="2017">2017</Option>
+                      <Option value="2018">2018</Option>
+                    </Select>
+                  </Form.Item>
+                </Form>
               </Col>
               <Col span={6}>
-                {AuthoritiesSelect}
+                <Form>
+                  <Form.Item label="Authorité">
+                    {AuthoritiesSelect}
+                  </Form.Item>
+                </Form>
               </Col>
             </Row>
           </div>
