@@ -19,8 +19,6 @@ const MainPage = ({ year, type, index }: any) => {
   const [authorities, setAuthorities] = useState([])
   const [pieData, setPieData] = useState([])
   const [barsData, setBarsData] = useState([])
-  const protocol = 'http'
-  const host = 'localhost:3000'
 
   const fetchJson = async (url: string, callback: any) => {
     const res = await fetch(url)
@@ -29,14 +27,14 @@ const MainPage = ({ year, type, index }: any) => {
   }
 
   useEffect(() => {
-    const entriesUrl = `${protocol}://${host}/api/authorities?year=${year}&type=${type}`
+    const entriesUrl = `/api/authorities?year=${year}&type=${type}`
     fetchJson(entriesUrl, setAuthorities)
 
     if(index) {
-      const pieDataUrl = `${protocol}://${host}/api/authority?year=${year}&ndept=${index}`
+      const pieDataUrl = `/api/authority?year=${year}&ndept=${index}`
       fetchJson(pieDataUrl, setPieData)
 
-      const barsDataUrl = `${protocol}://${host}/api/authority?ndept=${index}`
+      const barsDataUrl = `/api/authority?ndept=${index}`
       fetchJson(barsDataUrl, setBarsData)
     }
   }, [year, type, index])
@@ -161,18 +159,6 @@ const MainPage = ({ year, type, index }: any) => {
 }
 
 MainPage.getInitialProps = async ({ query }: NextPageContext) => {
-  console.log(query)
-
-  // console.log(req)
-  // let protocol = req
-  //   ? `${req.headers['x-forwarded-proto']}:`
-  //   : location.protocol
-  // let host = req ? req.headers['x-forwarded-host'] : location.host
-
-  // // TODO: fix
-  // protocol = 'http'
-  // host = 'localhost:3000'
-
   const year = query.year || 2018
   const type = query.type || 'd'
   const index = query.index || undefined
