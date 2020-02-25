@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
   console.log(`Selecting authorities...`);
 
   const entries = await db.query(
-    `SELECT ndept FROM data WHERE exer=${year} GROUP BY ndept;`
+    `SELECT ndept, lbudg FROM data WHERE exer=${year} GROUP BY ndept;`
   );
 
   console.log(`Returned ${entries.length} authorities`);

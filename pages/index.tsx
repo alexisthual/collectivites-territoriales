@@ -62,14 +62,19 @@ const MainPage = ({ year, type, index }: any) => {
 
   const AuthoritiesSelect = authorities ? (
     <Select
+      showSearch
       className="full-width"
       defaultValue={index}
       onChange={(newIndex: string) => changeRoute({ id: newIndex })}
       placeholder="Choisir une authorité..."
+      filterOption={(inputValue: string, option: any) =>
+        option.props.children.toLowerCase().indexOf(inputValue.toLowerCase()) >=
+        0
+      }
     >
       {authorities.map((authority: any) => (
         <Option key={authority.ndept} value={authority.ndept}>
-          {authority.ndept}
+          {authority.lbudg}
         </Option>
       ))}
     </Select>
