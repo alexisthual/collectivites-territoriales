@@ -32,6 +32,14 @@
     "@types/node": "^13.5.0",
     "@types/react": "^16.9.19",
     "@types/react-virtualized": "^9.21.8",
+    "husky": "^4.2.3",
+    "prettier": "1.19.1",
+    "pretty-quick": "^2.0.1",
     "typescript": "^3.7.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }
