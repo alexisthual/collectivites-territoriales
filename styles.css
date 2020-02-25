@@ -1,5 +1,6 @@
 .ant-layout-header h2 {
   color: #fff !important;
+  margin: 0px !important;
 }
 
 #main-container {
@@ -8,4 +9,10 @@
 
 .full-width {
   width: 100%;
+}
+
+#flex-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
